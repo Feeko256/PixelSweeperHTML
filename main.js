@@ -59,3 +59,5 @@ function renderCells() {
         cellContainer.appendChild(row);
     });
 }
+
+button.onclick = addCell;
