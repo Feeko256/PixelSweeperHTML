@@ -16,7 +16,7 @@
 }
 
 .cell-btn {
-    background-color: red;
+    background-color: gray;
     border: 1px solid blue;
     font-weight: bold;
     cursor: pointer;
@@ -29,5 +29,5 @@
 }
 
 .cell-btn:hover {
-    background-color: green;
+    background-color: darkgray;
 }
