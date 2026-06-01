@@ -24,6 +24,7 @@ class SweeperBackend {
     }
 }
 
+
 const backend = new SweeperBackend();
 let cellCounter = 1;
 
@@ -39,25 +40,18 @@ function addCell() {
 function renderCells() {
     const allCells = backend.getCells();
 
-    cellContainer.innerHTML = `
-        <tr>
-            <th>Номер</th>
-            <th>Мина</th>
-            <th>Открыта</th>
-        </tr>
-    `;
+    cellContainer.innerHTML = '';
 
-    allCells.forEach((cell, index) => {
-        const row = document.createElement('tr');
 
-        row.innerHTML = `
-            <td>Ячейка №${index + 1}</td>
-            <td>${cell.isMine ? 'Да' : 'Нет'}</td>
-            <td>${cell.isOpened ? 'Да' : 'Нет'}</td>
-        `;
+        for(let i =0; i < allCells.length; i++){
+            const button = document.createElement('button');
 
-        cellContainer.appendChild(row);
-    });
+            button.classList.add('cell-btn');
+            button.innerText = allCells[i].isMine ? 'Да' : 'Нет';
+
+            cellContainer.appendChild(button)
+        }
 }
 
+addCell();
 button.onclick = addCell;
