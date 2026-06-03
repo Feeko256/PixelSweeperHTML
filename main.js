@@ -166,8 +166,12 @@ const field_size = document.getElementById('field-size');
 const mines_count = document.getElementById('mines-count');
 const counter = document.getElementById('click-counter');
 const win_info = document.getElementById('win-info');
+const timer_label = document.getElementById('timer');
 
 const cellContainer = document.getElementById('cells-list');
+
+let seconds = 0;
+let timer = null;
 
 function createGrid() {
     backend.isfailed = false;
@@ -252,9 +256,11 @@ function renderCells() {
 
         if (backend.win) {
             win_info.innerText = 'Состояние: Победа';
+            stopTimer();
         }
         if (backend.isfailed) {
             win_info.innerText = 'Состояние: Проиграл';
+            stopTimer();
         }
 
         button.onclick = () => clickOnCell(i);
@@ -271,9 +277,11 @@ function clickOnCell(index) {
 
     if (!backend.isfailed && !backend.getCells()[index].isFlagged && !backend.getCells()[index].isOpened && backend.win === false) {
         if (backend.totalOppend === 0) {
+            resetTimer();
             backend.generateNoMinesSpot(index);
             backend.generateMines(mines_count);
             backend.findMines();
+            startTimer();
         }
 
         backend.openCell(index);
@@ -286,6 +294,26 @@ function clickToFlag(index) {
         backend.setFlag(index);
         renderCells();
     }
+}
+
+function startTimer() {
+    if (!timer) {
+        timer = setInterval(() => {
+            seconds++;
+            timer_label.innerText = `Время: ${seconds} сек.`;
+        }, 1000)
+    }
+}
+
+function stopTimer() {
+    clearInterval(timer);
+    timer = null;
+}
+
+function resetTimer() {
+    stopTimer();
+    seconds = 0;
+    timer_label.innerText = `Время: ${seconds} сек.`;
 }
 
 create_field.onclick = createGrid;
